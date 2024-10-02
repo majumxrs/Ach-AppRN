@@ -32,7 +32,7 @@ export default function Home() {
 
   //MINHA API 
   async function getAnimais() {
-    await fetch('http://10.139.75.19:5251/api/Animais/GetAllAnimal', {
+    await fetch('http://10.139.75.12:5251/api/Animais/GetAllAnimal', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -46,7 +46,7 @@ export default function Home() {
   }
 
   async function getAnimal(id) {
-    await fetch('http://10.139.75.19:5251/api/Animais/GetAnimalId/' + id, {
+    await fetch('http://10.139.75.12:5251/api/Animais/GetAnimalId/' + id, {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -127,82 +127,83 @@ export default function Home() {
   //Item e um nome generico que vem da api que vc delimitou na data, podendo ser qualquer nome. dependendo para facilitar o entedimento pode colocar o memo nome do que vc vai buscar.
   return (
     <>
-    <View style={css.container}>
-      {detalhes ?
-     <>
-      <View style={css.caixa}>
-      <Image
-        style={css.tinyLogo}
-        source={require("../../assets/LogoAppAchôCerta.png")}
-      />
-    </View >
-        <SafeAreaView style={css.container}>
-          <ScrollView>
-            <View style={css.containerDetalhes}>
-              <TouchableOpacity>
-                <Text style={css.BTNVoltar} onPress={() => { setDetalhes(false), setObs(false) }}>❮</Text>
-              </TouchableOpacity>
-              <View style={css.boxImage}>
-                <Image source={{ uri: imgAnimal }} style={css.imagem} />
-              </View>
-              <View style={css.boxTitle}>
-                <Text style={css.text}>{nomeAnimal}</Text>
-              </View>
-              <View>
-                <Text style={css.text}>Raça: {racaAnimal}</Text>
-                <Text style={css.text}>Tipo: {animalTipo}</Text>
-                <Text style={css.text}>Cor: {animalCor}</Text>
-                <Text style={css.text}>Sexo: {animalSexo}</Text>
-                <Text style={css.text}>Observação: {animalObservacao}</Text>
-               
-                {
-                  animalStatus == 0 ?
-                   <Text style={css.text}>Desaparecido</Text>
-                   :  <Text style={css.text}>Encontrado</Text>
-                }
-                <Text style={css.text}>Data Desaparecimento: {animalDataDesaparecimento}</Text>
-                <Text style={css.text}>Data encontro: {animalDataEncontro}</Text>                
-                <TouchableOpacity style={css.btn01} onPress={() => setObs(true)}>
-                  <Text style={css.TextoBTNC}>Nova Observação</Text>
-                </TouchableOpacity>
-                {obs &&
-                  <View style={css.PaiInput}>
-                    <TextInput style={css.input} textInput={observacaoDescricao} value={observacaoDescricao} onChangeText={(digitado) => setObservacaoDescricao(digitado)} placeholder="Nova Descrição:" />
-                    <TextInput style={css.input} textInput={observacaoLocal} value={observacaoLocal} onChangeText={(digitado) => setObservacaoLocal(digitado)} placeholder="Local de encontro:" />
-                    <TextInput style={css.input} textInput={observacaoData} value={observacaoData} onChangeText={(digitado) => setObservacaoData(digitado)} placeholder="Data:" />
-                    <TouchableOpacity style={css.btn02} onPress={() => SalvarObs()}>
-                      <Text style={css.TextoBTNC}>Salvar</Text>
-                    </TouchableOpacity>
+      <View style={css.container}>
+        {detalhes ?
+          <>
+            <View style={css.caixa}>
+              <Image
+                style={css.tinyLogo}
+                source={require("../../assets/LogoAppAchôCerta.png")}
+              />
+            </View >
+            <SafeAreaView style={css.container}>
+              <ScrollView>
+                <View style={css.containerDetalhes}>
+                  <TouchableOpacity>
+                    <Text style={css.BTNVoltar} onPress={() => { setDetalhes(false), setObs(false) }}>❮</Text>
+                  </TouchableOpacity>
+                  <View style={css.boxImage}>
+                    <Image source={{ uri: imgAnimal }} style={css.imagem} />
                   </View>
-                }
-              </View>
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-        </>
-        :
-        <>
-          <View style={css.caixa}>
-            <Image
-              style={css.tinyLogo}
-              source={require("../../assets/LogoAppAchôCerta.png")}
-            />
-          </View >
-          <FlatList
-            data={animais}
-            style={css.Flat}
-            renderItem={({ item }) => <Produto
-              title={item.animalNome}
-              image={item.animalFoto}
-              setDetalhes={() => { setDetalhes(true); getAnimal(item.animaisId) }}
-            />}
-            keyExtractor={(item) => item.animaisId}
-            contentContainerStyle={{ height: (animais.length * 600) + 110 }}
-          />
-        </>
+                  <View style={css.boxTitle}>
+                    <Text style={css.text}>{nomeAnimal}</Text>
+                  </View>
+                  <View>
+                    <Text style={css.text}>Raça: {racaAnimal}</Text>
+                    <Text style={css.text}>Tipo: {animalTipo}</Text>
+                    <Text style={css.text}>Cor: {animalCor}</Text>
+                    <Text style={css.text}>Sexo: {animalSexo}</Text>
+                    <Text style={css.text}>Observação: {animalObservacao}</Text>
 
-      }
-    </View>
+                    {
+                      animalStatus == 0 ?
+                        <Text style={css.text}>Desaparecido</Text>
+                        : <Text style={css.text}>Encontrado</Text>
+                    }
+                    <Text style={css.text}>Data Desaparecimento: {animalDataDesaparecimento}</Text>
+                    <Text style={css.text}>Data encontro: {animalDataEncontro}</Text>
+                    <TouchableOpacity style={css.btn01} onPress={() => setObs(true)}>
+                      <Text style={css.TextoBTNC}>Nova Observação</Text>
+                    </TouchableOpacity>
+                    {obs &&
+                      <View style={css.PaiInput}>
+                        <TextInput style={css.input} textInput={observacaoDescricao} value={observacaoDescricao} onChangeText={(digitado) => setObservacaoDescricao(digitado)} placeholder="Nova Descrição:" />
+                        <TextInput style={css.input} textInput={observacaoLocal} value={observacaoLocal} onChangeText={(digitado) => setObservacaoLocal(digitado)} placeholder="Local de encontro:" />
+                        <TextInput style={css.input} textInput={observacaoData} value={observacaoData} onChangeText={(digitado) => setObservacaoData(digitado)} placeholder="Data:" />
+                        <TouchableOpacity style={css.btn02} onPress={() => SalvarObs()}>
+                          <Text style={css.TextoBTNC}>Salvar</Text>
+                        </TouchableOpacity>
+                      </View>
+                    }
+                  </View>
+                </View>
+              </ScrollView>
+            </SafeAreaView>
+          </>
+          :
+          <>
+            <View style={css.caixa}>
+              <Image
+                style={css.tinyLogo}
+                source={require("../../assets/LogoAppAchôCerta.png")}
+              />
+            </View >
+            <FlatList
+              data={animais}
+              style={css.Flat}
+              renderItem={({ item }) => <Produto
+                title={item.animalNome}
+                image={item.animalFoto}
+                setDetalhes={() => { setDetalhes(true); getAnimal(item.animaisId) }}
+              />
+              }
+              keyExtractor={(item) => item.animaisId}
+              contentContainerStyle={{ height: (animais.length * 600) + 110 }}
+            />
+          </>
+
+        }
+      </View>
     </>
   )
 }
